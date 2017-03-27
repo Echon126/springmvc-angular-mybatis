@@ -1,0 +1,15 @@
+在Idea中，如果建立Maven项目，因为它默认只能将/src/main/resources下的资源文件发布到服务器中，
+所以我们在/src/main/Java中写的大量配置文件是无法被发布的，所以这样就会出现，配置文件加载失败，无法发现等异常，
+这该如何解决呢？前面所说的，已经提示了一种解决方法，就是将这些配置文件放到resources里面即可，在这个里面是会被发布出去的。
+另一种方法是在pom.xml中写内容，指定它发布资源，内容如下：
+
+<build>
+        <resources>
+              <resource>
+                  <directory>src/main/java</directory><!--src/main/java为我们要发布内容的目录。-->
+                  <includes>
+                      <include>**/*.xml</include><!--指定我们发布内容的类型-->
+                  </includes>
+              </resource>
+        </resources>
+    </build>

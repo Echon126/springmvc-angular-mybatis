@@ -1,0 +1,164 @@
+<div class="nav navbar-inverse">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+			data-target="#tt">
+			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+				class="icon-bar"></span>
+		</button>
+		<img class="navbar-brand" src="img/HBuilder.png">
+	</div>
+	<div class="collapse navbar-collapse" id="tt">
+		<ul class="nav navbar-nav">
+			<li><a href="#">Uchiha Madala</a></li>
+			<li><a href="#" data-toggle="dropdown">Uchiha Obito</a>
+				<ul class="dropdown dropdown-menu">
+					<li><a href="#">Uchiha Sasuke</a></li>
+					<li><a href="#">Uchiha Sasuke</a></li>
+					<li><a href="#">Uchiha Sasuke</a></li>
+				</ul></li>
+			<li><a href="#">Uchiha Sasuke</a></li>
+			<li><a href="#">Uchiha Itachi</a></li>
+		</ul>
+	</div>
+	<!--导航条结束-->
+	<!--沾满全屏container容器-->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<!--面板开始-->
+				<div class="panel panel-primary">
+					<!--面板标题/头部-->
+					<div class="panel-heading">AngularJS数据绑定</div>
+					<!--面板内容开始-->
+					<div class="panel-body">
+						<!--搜索工具栏开始-->
+						<div class="input-group col-md-2 pull-right">
+							<input type="text" placeholder="请输入要搜索的关键字" class="form-control"
+								ng-model="id" />
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-info">
+									搜索 <span class="glyphicon glyphicon-search"></span>
+								</button>
+							</div>
+						</div>
+						<!--搜索工具栏结束-->
+						<!--按钮工具栏开始-->
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-success" data-toggle="modal"
+								data-target="#myModal">
+								<span class=" glyphicon glyphicon-plus"> </span> 添加
+							</button>
+							<button type="button" class="btn btn-primary"
+								ng-click="deleteStu(x)">
+								<span class="glyphicon glyphicon-remove"></span> 删除
+							</button>
+							<button type="button" class="btn btn-warning" data-toggle="modal"
+								data-target="#myModal" ng-click="editStu(x)">
+								<span class="glyphicon glyphicon-edit"></span> 编辑
+							</button>
+						</div>
+						<!--按钮工具栏结束-->
+						<!--绑定表格开始-->
+						<table id="tb"
+							class="table table-striped table-bordered table-hover table-responsive">
+							<tr>
+								<!--表头，这只排序字段，-->
+								<th><input type="checkbox" id="ck_all" ng-model="selectAll" />
+								</th>
+								<th>序号</th>
+								<th ng-click="col='stid';desc=!desc">学号<span class="caret"></span>
+								</th>
+								<th ng-click="col='Name';desc=!desc">姓名<span class="caret"></span>
+								</th>
+								<th ng-click="col='major';desc=!desc">专业<span class="caret"></span>
+								</th>
+								<th ng-click="col='Age';desc=!desc">年龄<span class="caret"></span>
+								</th>
+								<th ng-click="col='Address';desc=!desc">地址<span
+									class="caret"></span>
+								</th>
+								<th>备注</th>
+								<!--<th>编辑</th>  
+                                <th>删除</th>-->
+							</tr>
+							<!--重复项开始，设置排序字段，数据源，names代表数据源，x表示names中遍历的每一个对象，id表示模糊搜索输入的内容，要与输入的input的ng-model一致，col表示排序名称，要与表头中一致-->
+							<tr ng-repeat="x in names | filter: id | orderBy:col:desc">
+								<td>
+								<input type="checkbox" name="cbx" value="{{x.stid}}" ng-click="isSelected(x)" ng-checked="selectAll" />
+								</td>
+								<td>{{$index+1}}</td>
+								<td>{{x.stid}}</td>
+								<td>{{x.Name}}</td>
+								<td>{{x.major}}</td>
+								<td>{{x.Age}}</td>
+								<td>{{x.Address}}</td>
+								<td>{{x.remark}}</td>
+							</tr>
+						</table>
+						<!--绑定表格结束-->
+					</div>
+					<!--面板内容开始-->
+					<!-- Modal弹框内容 -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-body">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<form class="col-md-12">
+										<span class="help-block col-md-2">序号</span>
+										<div class="form-group col-md-10">
+											<input type="text" class="form-control"
+												ng-model="currentStu.stid" />
+										</div>
+										<span class="help-block col-md-2">姓名</span>
+										<div class="form-group col-md-10">
+											<input type="text" class="form-control"
+												ng-model="currentStu.Name" />
+										</div>
+										<span class="help-block col-md-2">专业</span>
+										<div class="form-group col-md-10" ng-controller="classCtrl">
+											<select name="sel" class="form-control">
+												<option ng-repeat="c in datas" ng-model="currentStu.Name"
+													value="{{c.cid}}">{{c.Major}}</option>
+											</select>
+										</div>
+										<span class="help-block col-md-2">年龄</span>
+										<div class="form-group col-md-10">
+											<input type="text" class="form-control"
+												ng-model="currentStu.Age" />
+										</div>
+										<span class="help-block col-md-2">地址</span>
+										<div class="form-group col-md-10">
+											<input type="text" class="form-control"
+												ng-model="currentStu.Address" />
+										</div>
+
+
+										<span class="help-block col-md-2">备注</span>
+										<div class="form-group col-md-10">
+											<input type="text" class="form-control"
+												ng-model="currentStu.remark" />
+										</div>
+									</form>
+									<button type="button" class="btn btn-info" data-dismiss="modal">
+										取消 <span class="glyphicon glyphicon-share-alt"></span>
+									</button>
+									<button type="button" class="btn btn-primary">
+										<span class="glyphicon glyphicon-saved"
+											ng-click="addStu(currentStu)"></span>保存
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--模态框弹窗-->
+				</div>
+				<!--面板结束-->
+			</div>
+		</div>
+	</div>
+</div>
